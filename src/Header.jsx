@@ -25,7 +25,16 @@ function Header({ isLoggedIn, onLogout }) {
   const handleMainPageClick = () => navigate("/");
   const handleLoginClick = () => navigate("/login");
   const handleSignupClick = () => navigate("/signup");
-  const handleProfileClick = () => navigate("/test");
+
+  // 🔹 Редирект для профиля: админ → /admin, обычный → /test
+  const handleProfileClick = () => {
+    if (localStorage.getItem("admin") === "true") {
+      navigate("/admin");
+    } else {
+      navigate("/test");
+    }
+  };
+
   const handleLogoutClick = () => {
     onLogout();
     navigate("/");
@@ -58,23 +67,39 @@ function Header({ isLoggedIn, onLogout }) {
               alignItems: "center",
             }}
           >
-            <Link href="https://www.instagram.com/jetaimelaura/" target="_blank" rel="noopener" underline="hover" color="blue">Owner - Laura Kuzminska</Link>
-            <Link href="https://www.instagram.com/laurennbouquet/" target="_blank" rel="noopener" underline="hover" color="blue">Order - Instagram</Link>
-            <Link href="https://www.instagram.com/p/DJuQYwzCC14/?img_index=1" target="_blank" rel="noopener" underline="hover" color="blue">Bouquet - Work</Link>
+            <Link href="https://www.instagram.com/jetaimelaura/" target="_blank" rel="noopener" underline="hover" color="blue">
+              Owner - Laura Kuzminska
+            </Link>
+            <Link href="https://www.instagram.com/laurennbouquet/" target="_blank" rel="noopener" underline="hover" color="blue">
+              Order - Instagram
+            </Link>
+            <Link href="https://www.instagram.com/p/DJuQYwzCC14/?img_index=1" target="_blank" rel="noopener" underline="hover" color="blue">
+              Bouquet - Work
+            </Link>
           </Box>
 
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
-            <Button variant="contained" onClick={handleMainPageClick} sx={{ fontWeight: 900, borderRadius: "20px", textTransform: "none", px: 3, background: "linear-gradient(45deg,rgb(243,33,121) 30%,rgb(240,140,215) 90%)" }}>Main page</Button>
+            <Button variant="contained" onClick={handleMainPageClick} sx={{ fontWeight: 900, borderRadius: "20px", textTransform: "none", px: 3, background: "linear-gradient(45deg,rgb(243,33,121) 30%,rgb(240,140,215) 90%)" }}>
+              Main page
+            </Button>
 
             {isLoggedIn ? (
               <>
-                <Button variant="contained" onClick={handleProfileClick} sx={{ borderRadius: "20px", fontWeight: 900, textTransform: "none", px: 3, background: "linear-gradient(45deg,rgb(243,33,243) 30%,rgb(92,21,133) 90%)" }}>Профиль</Button>
-                <Button variant="contained" onClick={handleLogoutClick} sx={{ borderRadius: "20px", fontWeight: 900, textTransform: "none", px: 3, background: "linear-gradient(45deg,rgb(243,33,243) 30%,rgb(92,21,133) 90%)" }}>Выйти</Button>
+                <Button variant="contained" onClick={handleProfileClick} sx={{ borderRadius: "20px", fontWeight: 900, textTransform: "none", px: 3, background: "linear-gradient(45deg,rgb(243,33,243) 30%,rgb(92,21,133) 90%)" }}>
+                  Профиль
+                </Button>
+                <Button variant="contained" onClick={handleLogoutClick} sx={{ borderRadius: "20px", fontWeight: 900, textTransform: "none", px: 3, background: "linear-gradient(45deg,rgb(243,33,243) 30%,rgb(92,21,133) 90%)" }}>
+                  Выйти
+                </Button>
               </>
             ) : (
               <>
-                <Button variant="contained" onClick={handleLoginClick} endIcon={<LoginIcon />} sx={{ borderRadius: 15, fontSize: "1rem", fontWeight: 800, textTransform: "none", background: "linear-gradient(45deg,rgb(243,33,121) 30%,rgb(240,140,215) 90%)" }}>Log in</Button>
-                <Button variant="contained" color="secondary" onClick={handleSignupClick} startIcon={<PersonAddIcon />} sx={{ borderRadius: 15, fontSize: "1rem", fontWeight: 900, textTransform: "none", background: "linear-gradient(45deg,rgb(243,33,121) 30%,rgb(240,140,215) 90%)" }}>Sign up</Button>
+                <Button variant="contained" onClick={handleLoginClick} endIcon={<LoginIcon />} sx={{ borderRadius: 15, fontSize: "1rem", fontWeight: 800, textTransform: "none", background: "linear-gradient(45deg,rgb(243,33,121) 30%,rgb(240,140,215) 90%)" }}>
+                  Log in
+                </Button>
+                <Button variant="contained" color="secondary" onClick={handleSignupClick} startIcon={<PersonAddIcon />} sx={{ borderRadius: 15, fontSize: "1rem", fontWeight: 900, textTransform: "none", background: "linear-gradient(45deg,rgb(243,33,121) 30%,rgb(240,140,215) 90%)" }}>
+                  Sign up
+                </Button>
               </>
             )}
           </Box>

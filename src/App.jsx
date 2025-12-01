@@ -10,6 +10,7 @@ import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import Test from "./test.jsx";
 import PhotoGrid from "./PhotoGrid.jsx";
+import Admin from "./admin.jsx";
 
 function MainContent() {
   return (
@@ -51,6 +52,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("name");
+    localStorage.removeItem("admin"); 
     setIsLoggedIn(false);
   };
 
@@ -62,7 +64,7 @@ function App() {
     <Router>
       <CssBaseline />
 
-      {/* 🔥 Добавлен розовый фон для всей страницы */}
+      {/* 🔹 Глобальный розовый фон */}
       <GlobalStyles
         styles={{
           body: {
@@ -84,10 +86,30 @@ function App() {
 
         <Box sx={{ flex: 1 }}>
           <Routes>
+            {/* Главная страница */}
             <Route path="/" element={<MainContent />} />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+
+            {/* Login для всех пользователей */}
+            <Route
+              path="/login"
+              element={<Login onLogin={handleLogin} />}
+            />
+
+            {/* Signup */}
             <Route path="/signup" element={<Signup />} />
+
+            {/* Тестовая страница */}
             <Route path="/test" element={<Test onLogout={handleLogout} />} />
+
+            {/* Admin панель */}
+            <Route
+              path="/admin"
+              element={
+                localStorage.getItem("admin") === "true"
+                  ? <Admin />
+                  : <Login onLogin={() => window.location.reload()} />
+              }
+            />
           </Routes>
         </Box>
 

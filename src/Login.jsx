@@ -11,6 +11,21 @@ function Login({ onLogin }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    // Проверка на админа
+    const ADMIN_LOGIN = "admin";
+    const ADMIN_PASSWORD = "12345";
+
+    if (email === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
+      localStorage.setItem("token", "true");
+      localStorage.setItem("admin", "true"); // помечаем как админ
+      setErrorMsg("");
+      onLogin();
+      navigate("/admin"); // перенаправляем в админку
+      return;
+    }
+
+    // Обычный пользователь
     const savedUser = JSON.parse(localStorage.getItem("user"));
 
     if (!savedUser) {
@@ -19,11 +34,12 @@ function Login({ onLogin }) {
     }
 
     if (email === savedUser.email && password === savedUser.password) {
-      localStorage.setItem("token", "true"); 
+      localStorage.setItem("token", "true");
       localStorage.setItem("name", savedUser.name);
+      localStorage.removeItem("admin"); // не админ
       setErrorMsg("");
-      onLogin(); 
-      navigate("/test");
+      onLogin();
+      navigate("/test"); // обычная страница
     } else {
       setErrorMsg("Invalid email or password");
     }
