@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Box, CssBaseline } from "@mui/material";
+import { Box, CssBaseline, GlobalStyles } from "@mui/material";
 
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
@@ -61,6 +61,17 @@ function App() {
   return (
     <Router>
       <CssBaseline />
+
+      {/* 🔥 Добавлен розовый фон для всей страницы */}
+      <GlobalStyles
+        styles={{
+          body: {
+            backgroundColor: "#ffb6c1",
+            margin: 0,
+          },
+        }}
+      />
+
       <Box
         sx={{
           display: "flex",
